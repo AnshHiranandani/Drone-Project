@@ -3,7 +3,7 @@ import numpy as np
 
 
 def findFace(img):
-    faceCascade = cv2.CascadeClassifier("/Users/anshhiranandani/PycharmProjects/OpencvPython2/venv/haarcascade_frontalface_default.xml")
+    faceCascade = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
     imgGray: None = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces: None = faceCascade.detectMultiScale(imgGray, 1.2, 8)
 
