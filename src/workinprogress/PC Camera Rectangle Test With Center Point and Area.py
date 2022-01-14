@@ -3,7 +3,7 @@ import numpy as np
 
 
 def findFace(img):
-    faceCascade = cv2.CascadeClassifier("/Users/daksh/PycharmProjects/Opencvpython/haarcascade_frontalface_default.xml")
+    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "./haarcascade_frontalface_default.xml")
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(imgGray, 1.2, 8)
 
@@ -31,7 +31,13 @@ def findFace(img):
 cap = cv2.VideoCapture(0)
 while True:
     _, img = cap.read()
-    img, info = findFace(img)
-    print("Area", info[1])
+    try:
+        img, info = findFace(img)
+        print("Area", info[1])
+    except:
+        print("Expection happened")
+
+
+
     cv2.imshow("output", img)
     cv2.waitKey(1)
