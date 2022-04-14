@@ -10,6 +10,7 @@ def findFace(img):
     myFaceListC = []
     myFaceListArea = []
 
+    print(len(faces))
     for (x, y, w, h) in faces:
          cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
          cx = x+ w// 2
@@ -21,9 +22,9 @@ def findFace(img):
          myFaceListArea.append(area)
          if len(myFaceListArea) != 0:
              i = myFaceListArea.index(max(myFaceListArea))
-             return img, [myFaceListC[i],myFaceListArea[i]]
+             #return img, [myFaceListC[i],myFaceListArea[i]]
          else:
-             return img, [[0,0], 0]
+             print("Hello World")
 
 
 
@@ -33,7 +34,7 @@ while True:
     _, img = cap.read()
     try:
         img, info = findFace(img)
-        print("Area", info[1])
+        #print("Area", info[1])
     except:
         print("Expection happened")
 

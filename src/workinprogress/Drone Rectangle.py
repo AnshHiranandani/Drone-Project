@@ -11,7 +11,7 @@ me.connect()
 
 print(me.get_battery())
 
-me.takeoff()
+#me.takeoff()
 
 
 def findFace(img):
@@ -37,75 +37,87 @@ def findFace(img):
              return img, [[0,0], 0]
 
 
-def trackFace(area, zx, zy):
-#     print("Area", area)
-#     if zy < 100:
-#         me.send_rc_control(0, 0, 30, 0)
-#         sleep(0.00001)
-#         print("y1", zy)
-#         me.send_rc_control(0, 0, 0, 0)
-#     elif zy > 100:
-#         me.send_rc_control(0, 0, -30, 0)
-#         sleep(0.00001)
-#         print("y2", zy)
-#         me.send_rc_control(0, 0, 0, 0)
-#
-#     if zx < 170:
-#         me.send_rc_control(0, 0, 0, -30)
-#         sleep(0.01)
-#         print("x1", zx)
-#         me.send_rc_control(0, 0, 0, 0)
-#     elif zx > 170:
-#         me.send_rc_control(0, 0, 0, 30)
-#         sleep(0.01)
-#         print("x2", zx)
-#         me.send_rc_control(0, 0, 0, 0)
-#
-    if area < 12000:
-       me.send_rc_control(0, 10, 0, 0)
-       sleep(0.0001)
-       print("Area1", area)
-       me.send_rc_control(0, 0, 0, 0)
+def trackarea(area):
+  #  print("Area", area, "zx", zx, "zy", zy)
+  if area < 12000:
+      me.send_rc_control(0, 15, 0, 0)
+      sleep(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+      print("Area1", area)
+  #  print("this is the end of the fifth if")
+  elif area == 12000:
+      me.send_rc_control(0, 0, 0, 0)
+      print("Area2", area)
+      me.send_rc_control(0, 0, 0, 0)
+  #   print("this is the end of the sixth if")
+  elif area > 12000:
+      me.send_rc_control(0, -15, 0, 0)
+      sleep(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+      print("Area3", area)
+      #  print("this is the end of the seventh if")
+  else:
+      me.send_rc_control(0, 0, 0, 0)
 
-    elif area == 12000:
-        me.send_rc_control(0, 0, 0, 0)
-        print("Area2", area)
-        me.send_rc_control(0, 0, 0, 0)
+def trackx(zx):
+  if zx < 170:
+      #  print(" I am inside the thrid if")
+        me.send_rc_control(0, 0, 0, -15)
+        sleep(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+        print("x1", zx)
+  #  print("this is the end of the third if")
+  elif zx > 170:
+     #   print(" I am inside the fourth  if")
+        me.send_rc_control(0, 0, 0, 15)
+        sleep(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+        print("x2", zx)
+   # print("this is the end of the fourth if")
+  else:
+      me.send_rc_control(0, 0, 0, 0)
 
-    elif area > 12000:
-        me.send_rc_control(0, -10, 0, 0)
-        sleep(0.0001)
-        print("Area3", area)
-        me.send_rc_control(0, 0, 0, 0)
-
+def tracky(zy):
+  if zy < 100:
+        me.send_rc_control(0, 0, 15, 0)
+        sleep(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+        print("y1", zy)
+   # print("this is the end of the first if")
+  elif zy > 100:
+        me.send_rc_control(0, 0, -15, 0)
+        sleep(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+        print("y2", zy)
+ #   print("this is the end of the second if")
+  else:
+      me.send_rc_control(0, 0, 0, 0)
 
 
 me.send_rc_control(0,0,30,0)
 
-sleep(5)
+sleep(8.678)
 
-# me.streamon()
-# while True:
-# #    status, img = cap.read()
-# #    print(statdus)
-#     img = me.get_frame_read().frame
-#     img = cv2.resize(img, (360, 240))
-#     if img is None:
-#         continue
-#     try:
-#         img, info = findFace(img)
-#         length = len(info[0])
-#         zx = info[0][:1]
-#         zy = info[0][1]
-#         trackFace(info[1], zx, zy)
-#         #print(info[1])
-#         #print(zx)
-#         #print(zy)
-#     except:
-#         print("Expection happened")
-#
-#     cv2.imshow("Image", img)
-#
-#     cv2.waitKey(1)
-#
-# #    print(zx, zy)
+me.send_rc_control(0,0,0,0)
+
+me.streamon()
+while True:
+#    status, img = cap.read()
+#    print(statdus)
+    img = me.get_frame_read().frame
+    img = cv2.resize(img, (360, 240))
+    if img is None:
+        continue
+    try:
+        img, info = findFace(img)
+        length = len(info[0])
+        zx = info[0][0]
+        zy = info[0][1]
+        trackarea(info[1])
+        trackx(zx)
+        tracky(zy)
+        #print(info[1])
+        #print(zx)
+        #print(zy)
+    except:
+        print("Expection happened")
+
+    cv2.imshow("Image", img)
+
+    cv2.waitKey(1)
+
+ #    print(zx, zy)
